@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>10X — OSH BUSINESS SCHOOL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;700&family=Bebas+Neue&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #FFD700;
+      --orange: #FF6600;
+      --bg: #05050A;
+      --white: #FFFFFF;
+      --dim: rgba(255,255,255,0.5);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── CANVAS ── */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      gap: 1.2rem;
+    }
+
+    .school-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: var(--dim);
+      text-transform: uppercase;
+      animation: fadeUp 1s ease both;
+    }
+
+    .title-10x {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(7rem, 22vw, 14rem);
+      line-height: 0.9;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--orange) 60%, #FF3300 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 40px rgba(255,165,0,0.5));
+      animation: fadeUp 1s 0.2s ease both, pulse-glow 3s 1.2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { filter: drop-shadow(0 0 40px rgba(255,165,0,0.5)); }
+      50%       { filter: drop-shadow(0 0 80px rgba(255,165,0,0.9)); }
+    }
+
+    .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      max-width: 520px;
+      animation: fadeUp 1s 0.4s ease both;
+    }
+
+    .price-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+
+    .price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid var(--gold);
+      padding: 0.3rem 1rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.2em;
+      padding: 1rem 3.5rem;
+      border-radius: 4px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeUp 1s 0.8s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .cta-btn:hover { transform: scale(1.06); box-shadow: 0 0 50px rgba(255,165,0,0.7); }
+    .cta-btn:hover::after { opacity: 1; }
+
+    .countdown {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+      animation: fadeUp 1s 1s ease both;
+    }
+
+    /* ── PROBLEM ── */
+    #problem {
+      padding: 6rem 1.5rem;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .problem-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      font-weight: 300;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .problem-line.visible { opacity: 1; transform: none; }
+    .problem-line strong {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ── PRINCIPLES ── */
+    #principles {
+      padding: 5rem 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 8px;
+      padding: 2.5rem 2rem;
+      background: rgba(255,215,0,0.03);
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .card.visible { opacity: 1; transform: none; transition: opacity 0.8s ease, transform 0.8s ease, border-color 0.3s, box-shadow 0.3s; }
+    .card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 40px rgba(255,165,0,0.15);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--dim);
+      line-height: 1.7;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── CTA FINAL ── */
+    #final-cta {
+      padding: 7rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    #final-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+    }
+
+    .final-message {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-weight: 300;
+      color: var(--dim);
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .final-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 9vw, 5rem);
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-btn-final {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.2em;
+      padding: 1.2rem 4rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin-bottom: 2rem;
+    }
+    .cta-btn-final:hover { transform: scale(1.07); box-shadow: 0 0 70px rgba(255,165,0,0.8); }
+
+    .whatsapp-line {
+      font-size: 0.8rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+    }
+
+    .guarantee {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.2em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .cards { grid-template-columns: 1fr; }
+      .cta-btn-final { padding: 1rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 3D CANVAS -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section id="hero">
+  <span class="school-label">OSH BUSINESS SCHOOL</span>
+  <h1 class="title-10x">10X</h1>
+  <p class="tagline">Перестань работать больше.<br>Начни расти системно.</p>
+
+  <div class="price-block">
+    <span class="price">7 000 сом</span>
+    <span class="badge">⚡ Количество ограничено</span>
+  </div>
+
+  <a class="cta-btn" href="https://wa.me/996777111022?text=Хочу%20на%2010X" target="_blank">
+    ЗАПИСАТЬСЯ
+  </a>
+
+  <span class="countdown">Следующая группа — через 3 месяца</span>
+</section>
+
+<!-- ═══════════════════════════════ PROBLEM ═══════════════════════════════ -->
+<section id="problem">
+  <p class="problem-line">
+    Ты всё ещё работаешь <strong>12 часов</strong>,<br>а бизнес не растёт?
+  </p>
+  <p class="problem-line">
+    Пора перестать быть <strong>делателем</strong>.<br>Стань <strong>множителем</strong>.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════ PRINCIPLES ═══════════════════════════════ -->
+<section id="principles">
+  <p class="section-label">Три принципа системы</p>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">⬛</div>
+      <div class="card-title">Матрица задач</div>
+      <p class="card-desc">80% того, что ты делаешь — можно удалить, делегировать или автоматизировать прямо сейчас.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">◎</div>
+      <div class="card-title">Сигнал vs Шум</div>
+      <p class="card-desc">90% твоего времени — на главное. Всё остальное — иллюзия занятости.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Состояние потока</div>
+      <p class="card-desc">Результат ×5 за то же время. Не работай усерднее — работай в нужном состоянии.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FINAL CTA ═══════════════════════════════ -->
+<section id="final-cta">
+  <p class="final-message">
+    «10X — это не про больше часов. Это про систему, которая работает, пока ты спишь.»
+  </p>
+  <span class="final-price">7 000 сом</span>
+  <a class="cta-btn-final" href="https://wa.me/996777111022?text=Хочу%20на%2010X" target="_blank">
+    🔥 ЗАПИСАТЬСЯ СЕЙЧАС
+  </a>
+  <p class="whatsapp-line">+996 777 111 022</p>
+  <p class="guarantee">✅ Гарантия результата</p>
+</section>
+
+<footer>© OSH BUSINESS SCHOOL — 10X</footer>
+
+<!-- ═══════════════════════════════ THREE.JS ═══════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  const canvas = document.getElementById('bg-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
+  camera.position.set(0, 0, 6);
+
+  // ── ICOSAHEDRON (gold) ──
+  const icoGeo = new THREE.IcosahedronGeometry(1.4, 1);
+  const icoMat = new THREE.MeshStandardMaterial({
+    color: 0xFFD700,
+    metalness: 1,
+    roughness: 0.15,
+    wireframe: false,
+    emissive: 0xFF6600,
+    emissiveIntensity: 0.25,
+  });
+  const ico = new THREE.Mesh(icoGeo, icoMat);
+  scene.add(ico);
+
+  // Wireframe overlay
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0xFFD700, wireframe: true, transparent: true, opacity: 0.18 });
+  const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(1.42, 1), wireMat);
+  scene.add(wire);
+
+  // ── RINGS ──
+  function makeRing(radius, tube, color, rx, ry) {
+    const geo = new THREE.TorusGeometry(radius, tube, 16, 100);
+    const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.55 });
+    const ring = new THREE.Mesh(geo, mat);
+    ring.rotation.x = rx;
+    ring.rotation.y = ry;
+    return ring;
+  }
+  const ring1 = makeRing(2.0, 0.012, 0xFFD700, Math.PI / 2, 0);
+  const ring2 = makeRing(2.3, 0.009, 0xFF8800, Math.PI / 4, Math.PI / 6);
+  const ring3 = makeRing(2.6, 0.007, 0xFF6600, -Math.PI / 5, Math.PI / 3);
+  scene.add(ring1, ring2, ring3);
+
+  // ── PARTICLES ──
+  const pCount = 1200;
+  const pPositions = new Float32Array(pCount * 3);
+  const pVelocities = new Float32Array(pCount);
+  for (let i = 0; i < pCount; i++) {
+    pPositions[i * 3]     = (Math.random() - 0.5) * 14;
+    pPositions[i * 3 + 1] = (Math.random() - 0.5) * 14;
+    pPositions[i * 3 + 2] = (Math.random() - 0.5) * 8;
+    pVelocities[i] = 0.003 + Math.random() * 0.006;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+  const pMat = new THREE.PointsMaterial({ color: 0xFFD700, size: 0.035, transparent: true, opacity: 0.7 });
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
+
+  // ── LIGHTS ──
+  const ambLight = new THREE.AmbientLight(0xffffff, 0.3);
+  scene.add(ambLight);
+
+  const goldLight = new THREE.PointLight(0xFFAA00, 4, 10);
+  goldLight.position.set(0, 0, 4);
+  scene.add(goldLight);
+
+  const rimLight = new THREE.PointLight(0xFF4400, 2, 8);
+  rimLight.position.set(-4, 2, -2);
+  scene.add(rimLight);
+
+  // ── MOUSE parallax ──
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 0.6;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 0.6;
+  });
+
+  // ── RESIZE ──
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // ── ANIMATE ──
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.008;
+
+    ico.rotation.y += 0.004;
+    ico.rotation.x += 0.002;
+    wire.rotation.y = ico.rotation.y;
+    wire.rotation.x = ico.rotation.x;
+
+    ring1.rotation.z += 0.006;
+    ring2.rotation.z -= 0.004;
+    ring3.rotation.y += 0.003;
+
+    // Pulsing light
+    goldLight.intensity = 3.5 + Math.sin(t * 1.5) * 1.5;
+
+    // Particles drift upward
+    const pos = pGeo.attributes.position.array;
+    for (let i = 0; i < pCount; i++) {
+      pos[i * 3 + 1] += pVelocities[i];
+      if (pos[i * 3 + 1] > 7) pos[i * 3 + 1] = -7;
+    }
+    pGeo.attributes.position.needsUpdate = true;
+
+    // Camera parallax
+    camera.position.x += (mouseX - camera.position.x) * 0.04;
+    camera.position.y += (-mouseY - camera.position.y) * 0.04;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.problem-line, .card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 150);
+    }
+  });
+}, { threshold: 0.2 });
+revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

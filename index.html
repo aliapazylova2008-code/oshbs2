@@ -50,6 +50,7 @@
             margin-bottom: 1.5rem;
         }
 
+        /* 10X — парит и светится */
         .tenx {
             font-size: 7rem;
             font-weight: 900;
@@ -61,17 +62,16 @@
             text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
             animation: float 3s ease-in-out infinite, glowPulse 2s ease-in-out infinite;
             display: inline-block;
-            transform-style: preserve-3d;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotateX(0deg); }
-            50% { transform: translateY(-8px) rotateX(2deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
 
         @keyframes glowPulse {
             0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
-            50% { text-shadow: 0 0 50px rgba(255, 215, 0, 0.9), 0 0 20px rgba(255, 200, 0, 0.6); }
+            50% { text-shadow: 0 0 50px rgba(255, 215, 0, 0.9); }
         }
 
         .subhead {
@@ -82,6 +82,7 @@
             animation: fadeInUp 0.8s ease-out;
         }
 
+        /* Дата — светящийся золотой блок */
         .date-gold {
             display: inline-block;
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 200, 0, 0.1));
@@ -136,6 +137,7 @@
             margin: 0.5rem 0;
         }
 
+        /* Кнопка — пульсирует */
         .cta {
             display: inline-block;
             background: linear-gradient(135deg, #FFD700, #FFA500);

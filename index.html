@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>10X Продуктивность | Osh Business School</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #050505;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Фон с градиентом */
+        .simple-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0a0a0f 0%, #030303 100%);
+            z-index: 0;
+        }
+
+        /* Контейнер для искр */
+        .sparks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .spark {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatSpark 8s ease-in-out infinite;
+            box-shadow: 0 0 4px rgba(255, 215, 0, 0.6);
+        }
+
+        @keyframes floatSpark {
+            0% {
+                opacity: 0;
+                transform: translateY(0px) translateX(0px) scale(0.5);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            30% {
+                opacity: 0.8;
+            }
+            70% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) translateX(30px) scale(1.2);
+            }
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 2rem 1.5rem;
+        }
+
+        .glass-card {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(16px);
+            border-radius: 48px;
+            padding: 2.8rem 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        /* ===== ВАУ-ХЕДЕР ===== */
+        .hero {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tenx {
+            font-size: 10rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.7);
+            animation: float 3s ease-in-out infinite, glowPulse 2s ease-in-out infinite;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
+            50% { text-shadow: 0 0 55px rgba(255, 215, 0, 0.95); }
+        }
+
+        .subhead {
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0.5rem 0 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .date-gold {
+            display: inline-flex;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 200, 0, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.7);
+            padding: 0.6rem 1.5rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0.8rem 0;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            animation: borderPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { border-color: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+            50% { border-color: rgba(255, 215, 0, 1); box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 1rem 0 0.5rem;
+            background: linear-gradient(135deg, #fff, #FFD700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 0.9s ease-out;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin: 1rem auto;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .price {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #FFD700;
+            margin: 0.5rem 0;
+        }
+
+        .cta {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            font-weight: 800;
+            font-size: 1.2rem;
+            padding: 1rem 2.2rem;
+            border-radius: 60px;
+            text-decoration: none;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+        }
+
+        .cta:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.9);
+            animation: none;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            border-left: 4px solid #FFD700;
+            padding-left: 1rem;
+        }
+
+        .grid-2, .grid-3 {
+            display: grid;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 24px;
+            border-left: 2px solid #FFD700;
+            transition: transform 0.2s;
+        }
+
+        .card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.08); }
+        .card h3 { color: #FFD700; margin-bottom: 0.75rem; font-size: 1.3rem; }
+
+        .final-cta {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 32px;
+        }
+
+        .footer-contacts {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        @media (max-width: 700px) {
+            .glass-card { padding: 1.5rem; }
+            .tenx { font-size: 5rem; }
+            h1 { font-size: 1.6rem; }
+            .price { font-size: 2rem; }
+            .section-title { font-size: 1.4rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .hero-description { font-size: 1rem; }
+            .date-gold { white-space: normal; flex-wrap: wrap; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="simple-bg"></div>
+<div class="sparks-container" id="sparksContainer"></div>
+
+<div class="content">
+    <div class="glass-card">
+        <div class="hero">
+            <div class="tenx">10X</div>
+            <div class="subhead">OSH BUSINESS SCHOOL</div>
+            <div class="date-gold">📅 25 апреля | 9:00 — 13:00 | Ош</div>
+            <h1>Продуктивность предпринимателя</h1>
+            <div class="hero-description">Система неизбежной продуктивности</div>
+            <div class="price">10 000 сом</div>
+            <a href="https://wa.me/996777111022?text=Хочу%20на%20практикум%2010X%2025%20апреля" class="cta" target="_blank">🔥 ЗАПИСАТЬСЯ</a>
+        </div>
+
+        <div class="section-title">Проблема</div>
+        <p>Предприниматель часто занят весь день, но к вечеру главные задачи так и не сдвинулись. Причина не в лени. Внимание уходит в шум, энергия сгорает на лишнем.</p>
+
+        <div class="section-title">Программа</div>
+        <div class="grid-2">
+            <div class="card"><h3>01 Роли предпринимателя</h3><p>Делатель, редактор или множитель</p></div>
+            <div class="card"><h3>02 Сигнал vs Шум</h3><p>Что ведёт к цели, а что — иллюзия занятости</p></div>
+            <div class="card"><h3>03 Матрица задач</h3><p>Делать, делегировать или удалить</p></div>
+            <div class="card"><h3>04 Пропускная способность</h3><p>Незавершённые дела и что с этим делать</p></div>
+            <div class="card"><h3>05 Внимание, энергия, воля</h3><p>Что расходует ресурсы и как их восстановить</p></div>
+            <div class="card"><h3>06 Инструменты фокуса</h3><p>Помодоро, вход в поток, кайзен</p></div>
+        </div>
+
+        <div class="section-title">Для кого</div>
+        <div class="grid-3">
+            <div class="card">📌 Постоянно заняты, но недовольны результатом</div>
+            <div class="card">📌 Перегружены операционкой</div>
+            <div class="card">📌 Часто отвлекаются и распыляются</div>
+            <div class="card">📌 Начинают много, но не доводят до конца</div>
+            <div class="card">📌 Хотят больше фокуса и ясности</div>
+        </div>
+
+        <div class="section-title">Что получите</div>
+        <div class="grid-2">
+            <div class="card">✅ Какая у вас роль и в какую перейти</div>
+            <div class="card">✅ Какие задачи — сигнал, а какие — шум</div>
+            <div class="card">✅ Где теряются внимание и энергия</div>
+            <div class="card">✅ Как повысить пропускную способность</div>
+            <div class="card">✅ Как входить в фокус быстрее</div>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0; padding: 1.5rem; background: rgba(255,215,0,0.05); border-radius: 32px;">
+            <p style="font-size: 1.2rem;">Проблема не в том, что вы мало стараетесь.<br>Лучшие часы, силы и внимание уходят не туда.</p>
+            <p style="margin-top: 1rem;">Когда вы видите сигнал и убираете шум — продуктивность растёт кратно.</p>
+        </div>
+
+        <div class="section-title">Частые вопросы</div>
+        <div class="grid-2">
+            <div class="card"><strong>Что я получу после?</strong><br>Чёткое понимание своей роли, матрицу задач, инструменты фокуса и план как увеличить продуктивность.</div>
+            <div class="card"><strong>Нужна ли подготовка?</strong><br>Нет, приходите с открытым умом. Всё необходимое дадим на практикуме.</div>
+            <div class="card"><strong>Будут ли материалы?</strong><br>Да, вы получите доступ к презентации и рабочим шаблонам.</div>
+        </div>
+
+        <div class="final-cta">
+            <div class="price" style="font-size: 2rem;">10 000 сом</div>
+            <a href="https://wa.me/996777111022?text=Хочу%20на%20практикум%2010X%2025%20апреля" class="cta" style="animation: none;" target="_blank">🔥 ЗАПИСАТЬСЯ СЕЙЧАС</a>
+        </div>
+
+        <div class="footer-contacts">
+            📞 +996 777 111 022 | @oshbschool
+        </div>
+    </div>
+</div>
+
+<script>
+    // Создаём золотые искры на фоне
+    function createSparks() {
+        const container = document.getElementById('sparksContainer');
+        const sparkCount = 80;
+        
+        for (let i = 0; i < sparkCount; i++) {
+            const spark = document.createElement('div');
+            spark.classList.add('spark');
+            
+            // Случайные размеры
+            const size = 1 + Math.random() * 3;
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size}px`;
+            
+            // Случайное начальное положение
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+            spark.style.left = `${startX}px`;
+            spark.style.top = `${startY}px`;
+            
+            // Случайная задержка анимации
+            const delay = Math.random() * 12;
+            spark.style.animationDelay = `${delay}s`;
+            
+            // Случайная длительность анимации
+            const duration = 6 + Math.random() * 8;
+            spark.style.animationDuration = `${duration}s`;
+            
+            // Случайная прозрачность
+            const opacity = 0.3 + Math.random() * 0.5;
+            spark.style.opacity = opacity;
+            
+            container.appendChild(spark);
+        }
+    }
+    
+    // Пересоздаём искры при изменении размера окна
+    window.addEventListener('resize', () => {
+        const container = document.getElementById('sparksContainer');
+        container.innerHTML = '';
+        createSparks();
+    });
+    
+    // Запускаем
+    createSparks();
+</script>
+
+</body>
+</html>
